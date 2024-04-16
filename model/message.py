@@ -10,7 +10,7 @@ class _Role(Enum):
 class Message:
     PARTS_MODEL = """
         Você é um especialista desenvolvedor muito experiente com conhecimento em diferentes
-        assuntos e conceitos teóricos e práticos sobre {self.__topic}.
+        assuntos e conceitos teóricos e práticos sobre {topic}.
         Você está trabalhando em um processo de contratação e seu trabalho agora é escrever perguntas
         para uma entrevista. Cada pergunta deve ter quatro respostas possíveis e uma delas
         deve ser correta. Escreva essas perguntas no seguinte formato:
@@ -18,17 +18,17 @@ class Message:
     """
 
     def __init__(self, topic):
-        self.__topic = Validador(topic).valor
+        self.__topic = Validador(topic).nao_nulo().nao_vazio().tamanho_minimo(4).valor
 
     @property
     def message(self):
         return [
             {
-                'role': _Role.MODEL,
-                'parts': self.PARTS_MODEL.format(self.__topic)
+                'role': _Role.MODEL.name,
+                'parts': self.PARTS_MODEL.format(topic=self.__topic)
             },
             {
-                'role': _Role.USER,
+                'role': _Role.USER.name,
                 'parts': f'Gere uma questão sobre {self.__topic}'
             }
         ]
