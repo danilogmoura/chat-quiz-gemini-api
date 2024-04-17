@@ -2,3 +2,4 @@ rich~=13.7.1
 openai
 google-generativeai
 overrides
+pylint
