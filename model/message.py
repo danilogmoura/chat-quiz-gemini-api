@@ -1,4 +1,4 @@
-from utils import Validador
+from utils import Validator
 from abc import ABC, abstractmethod
 
 
@@ -12,8 +12,8 @@ class Message(ABC):
         {{'statement': 'question', 'options': ['Option 1', 'Option 2', 'Option 3', 'Option 4'],'correct': 'Option 3'}}
     """
 
-    def __init__(self, topic):
-        self.__topic = Validador(topic).nao_nulo().nao_vazio().tamanho_minimo(4).valor
+    def __init__(self, topic, attribute='Tópico'):
+        self.__topic = Validator(topic, attribute).not_null().not_empty().minimum_size(4).value
 
     @property
     def topic(self):

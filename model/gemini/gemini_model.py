@@ -1,3 +1,6 @@
+from google.api_core.exceptions import InvalidArgument
+import sys
+
 from model import AbstractGenerativeModel
 from .gemini_message import GeminiMessage
 import google.generativeai as genai
@@ -31,5 +34,9 @@ class GeminiModel(AbstractGenerativeModel):
 
     @overrides
     def generate_question(self, topic):
-        raw_message = self.__model.generate_content(self.message(topic).content).text
-        return self.to_dictionary(raw_message)
+        try:
+            raw_message = self.__model.generate_content(self.message(topic).content).text
+            return self.to_dictionary(raw_message)
+        except InvalidArgument as e:
+            print(e.args[0])
+            sys.exit()

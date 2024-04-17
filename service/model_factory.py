@@ -1,5 +1,6 @@
 from service import GenerativeModelFactor
 from overrides import overrides
+from utils import Validator
 import importlib
 import configparser
 
@@ -10,18 +11,18 @@ class ModelFactory(GenerativeModelFactor):
     @overrides
     def new_model(self):
         config = configparser.ConfigParser()
-
         config.read('resources/config.properties')
 
-        model = config.get(self.__GENERATIVE_MODEL_SECTION, 'generative.model.module')
-        class_name = config.get(self.__GENERATIVE_MODEL_SECTION, 'generative.model.class_name')
-        model_name = config.get(self.__GENERATIVE_MODEL_SECTION, 'generative.model.name')
-        api_key = config.get(self.__GENERATIVE_MODEL_SECTION, 'generative.model.name.api_key')
-
-        if not all([model, class_name, model_name, api_key]):
-            raise ValueError("Propriedades do arquivo 'config.properties' inválidas")
+        model = self.__config_validator(config, 'generative.model.module')
+        class_name = self.__config_validator(config, 'generative.model.class_name')
+        model_name = self.__config_validator(config, 'generative.model.name')
+        api_key = self.__config_validator(config, 'generative.model.name.api_key')
 
         generative_model = importlib.import_module(model)
         generative_model_instance = getattr(generative_model, class_name)
 
         return generative_model_instance(model_name, api_key)
+
+    def __config_validator(self, config, attribute):
+        value = config.get(self.__GENERATIVE_MODEL_SECTION, attribute)
+        return Validator(value, attribute).not_empty().not_null().minimum_size(3).value
