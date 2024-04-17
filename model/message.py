@@ -1,13 +1,8 @@
-from enum import Enum
 from utils import Validador
+from abc import ABC, abstractmethod
 
 
-class _Role(Enum):
-    MODEL = 'model'
-    USER = 'user'
-
-
-class Message:
+class Message(ABC):
     PARTS_MODEL = """
         Você é um especialista desenvolvedor muito experiente com conhecimento em diferentes
         assuntos e conceitos teóricos e práticos sobre {topic}.
@@ -21,14 +16,10 @@ class Message:
         self.__topic = Validador(topic).nao_nulo().nao_vazio().tamanho_minimo(4).valor
 
     @property
-    def message(self):
-        return [
-            {
-                'role': _Role.MODEL.name,
-                'parts': self.PARTS_MODEL.format(topic=self.__topic)
-            },
-            {
-                'role': _Role.USER.name,
-                'parts': f'Gere uma questão sobre {self.__topic}'
-            }
-        ]
+    def topic(self):
+        return self.__topic
+
+    @property
+    @abstractmethod
+    def content(self):
+        pass

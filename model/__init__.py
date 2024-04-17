@@ -1,4 +1,7 @@
 from .message import Message
+from .abstract_generative_model import AbstractGenerativeModel
 
-__version__ = '1.0.0'
-__all__ = ["Message"]
+__all__ = [
+    "Message",
+    "AbstractGenerativeModel"
+]

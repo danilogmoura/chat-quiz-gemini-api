@@ -1,13 +1,10 @@
+from service import QuestionGenerator
+from service import GeminiModelFactory
 from rich.console import Console
 from rich.prompt import Prompt
-import json
-import google.generativeai as genai
-import re
 
 console = Console()
-genai.configure(api_key="")
-
-model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
+generative_model = GeminiModelFactory().new_model()
 
 
 def wait_for_enter():
@@ -18,28 +15,7 @@ def wait_for_enter():
 
 
 def generate_question(topic):
-    message = [
-        {
-            'role': 'model',
-            'parts': f"""
-            Você é um especialista desenvolvedor muito experiente com conhecimento em diferentes
-            assuntos e conceitos teóricos e práticos sobre {topic}.
-            Você está trabalhando em um processo de contratação e seu trabalho agora é escrever perguntas
-            para uma entrevista. Cada pergunta deve ter quatro respostas possíveis e uma delas
-            deve ser correta. Escreva essas perguntas no seguinte formato:
-            {{'statement': 'question', 'options': ['Option 1', 'Option 2', 'Option 3', 'Option 4'], 'correct': 'Option 3'}}
-        """
-        },
-        {
-            'role': 'user',
-            'parts': f'Gere uma questão sobre {topic}'
-        }
-    ]
-    pattern = r'{[^}]+}'
-    raw_response = model.generate_content(message).text
-    matched_response = re.findall(pattern, raw_response)
-
-    return json.loads(matched_response[0].replace("'", "\""))
+    return QuestionGenerator(generative_model).ask(topic)
 
 
 def run_quiz():
@@ -85,7 +61,7 @@ def run_quiz():
 def main():
     console.clear()
 
-    title = "[bold yellow]Quiz GPT[/bold yellow]"
+    title = "[bold yellow]Quiz GEMINI[/bold yellow]"
     console.print(f"Bem vindo ao {title}")
 
     run_quiz()
