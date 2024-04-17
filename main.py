@@ -1,10 +1,10 @@
 from service import QuestionGenerator
-from service import GeminiModelFactory
+from service import ModelFactory
 from rich.console import Console
 from rich.prompt import Prompt
 
 console = Console()
-generative_model = GeminiModelFactory().new_model()
+generative_model = ModelFactory().new_model()
 
 
 def wait_for_enter():

@@ -1,9 +1,9 @@
 from .question_generator import QuestionGenerator
 from .generative_model_factor import GenerativeModelFactor
-from .gemini_model_factory import GeminiModelFactory
+from .model_factory import ModelFactory
 
 __all__ = [
-    "GeminiModelFactory",
+    "ModelFactory",
     "GenerativeModelFactor",
     "QuestionGenerator"
 ]

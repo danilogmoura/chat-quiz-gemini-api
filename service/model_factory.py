@@ -4,7 +4,7 @@ import importlib
 import configparser
 
 
-class GeminiModelFactory(GenerativeModelFactor):
+class ModelFactory(GenerativeModelFactor):
     __GENERATIVE_MODEL_SECTION = 'generative.model'
 
     @overrides
@@ -18,7 +18,10 @@ class GeminiModelFactory(GenerativeModelFactor):
         model_name = config.get(self.__GENERATIVE_MODEL_SECTION, 'generative.model.name')
         api_key = config.get(self.__GENERATIVE_MODEL_SECTION, 'generative.model.name.api_key')
 
-        generative_model = importlib.import_module(model)
-        gemini_model = getattr(generative_model, class_name)
+        if not all([model, class_name, model_name, api_key]):
+            raise ValueError("Propriedades do arquivo 'config.properties' inválidas")
 
-        return gemini_model(model_name, api_key)
+        generative_model = importlib.import_module(model)
+        generative_model_instance = getattr(generative_model, class_name)
+
+        return generative_model_instance(model_name, api_key)
