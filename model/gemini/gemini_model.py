@@ -1,11 +1,11 @@
-from google.api_core.exceptions import InvalidArgument
 import sys
+import re
+import google.generativeai as genai
+from google.api_core.exceptions import InvalidArgument
 
+from overrides import overrides
 from model import AbstractGenerativeModel
 from .gemini_message import GeminiMessage
-import google.generativeai as genai
-from overrides import overrides
-import re
 
 
 class GeminiModel(AbstractGenerativeModel):
@@ -25,8 +25,8 @@ class GeminiModel(AbstractGenerativeModel):
         if match:
             dicionario_texto = match.group("dictionary")
             return eval(dicionario_texto)
-        else:
-            raise ValueError("Não foi possível extrair um dicionário da mensagem fornecida")
+
+        raise ValueError("Não foi possível extrair um dicionário da mensagem fornecida")
 
     @overrides
     def message(self, topic):
