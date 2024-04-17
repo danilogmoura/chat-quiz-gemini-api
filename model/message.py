@@ -9,7 +9,7 @@ class Message(ABC):
         Você está trabalhando em um processo de contratação e seu trabalho agora é escrever perguntas
         para uma entrevista. Cada pergunta deve ter quatro respostas possíveis e uma delas
         deve ser correta. Escreva essas perguntas no seguinte formato:
-        {{'statement': 'question', 'options': ['Option 1', 'Option 2', 'Option 3', 'Option 4'],'correct': 'Option 3'}}
+        {{"statement": "question", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "correct": "Option 3"}}
     """
 
     def __init__(self, topic, attribute='Tópico'):

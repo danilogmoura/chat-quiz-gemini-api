@@ -1,3 +1,4 @@
+import json
 import sys
 import re
 import google.generativeai as genai
@@ -21,10 +22,11 @@ class GeminiModel(AbstractGenerativeModel):
 
     @overrides
     def to_dictionary(self, raw_message):
-        match = re.search(self.__PATTERN, raw_message)
+        cleaned_message = re.sub(r'\s+', ' ', raw_message)
+        match = re.search(self.__PATTERN, cleaned_message)
         if match:
             dicionario_texto = match.group("dictionary")
-            return eval(dicionario_texto)
+            return json.loads(dicionario_texto)
 
         raise ValueError("Não foi possível extrair um dicionário da mensagem fornecida")
 
