@@ -1,5 +1,5 @@
-from model import Message
 from overrides import overrides
+from model import Message
 
 
 class GeminiMessage(Message):

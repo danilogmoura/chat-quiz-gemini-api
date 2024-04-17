@@ -1,5 +1,5 @@
-from utils import Validator
 from abc import ABC, abstractmethod
+from utils import Validator
 
 
 class Message(ABC):

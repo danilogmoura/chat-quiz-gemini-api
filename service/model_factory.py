@@ -1,8 +1,8 @@
-from service import GenerativeModelFactor
-from overrides import overrides
-from utils import Validator
 import importlib
 import configparser
+from overrides import overrides
+from service import GenerativeModelFactor
+from utils import Validator
 
 
 class ModelFactory(GenerativeModelFactor):

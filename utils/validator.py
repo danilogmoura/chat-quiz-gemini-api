@@ -28,5 +28,6 @@ class Validator:
             return self
 
         if len(self.__value) < value:
-            self.__errors.append(f'"{self.__attribute}" deve possuir no mínimo "{value}" caracteres')
+            self.__errors.append(f'"{self.__attribute}" deve possuir no mínimo "{value}" '
+                                 f'caracteres')
         return self

@@ -1,7 +1,7 @@
-from service import QuestionGenerator
-from service import ModelFactory
 from rich.console import Console
 from rich.prompt import Prompt
+from service import QuestionGenerator
+from service import ModelFactory
 
 console = Console()
 generative_model = ModelFactory().new_model()

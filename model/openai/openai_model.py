@@ -1,11 +1,8 @@
-from model import AbstractGenerativeModel
 from overrides import overrides
+from model import AbstractGenerativeModel
 
 
 class OpenAIModel(AbstractGenerativeModel):
-
-    def __init__(self, model_name, api_key):
-        super().__init__(model_name, api_key)
 
     @overrides
     def to_dictionary(self, raw_message):
